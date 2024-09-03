@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+	<head>
+		<meta charset="UTF-8" />
+		<title>WeatherSpot</title>
+		<link rel="icon" th:href="@{/img/weatherSpot1.png}" type="image/png" />
+		<link rel="stylesheet" th:href="@{/style/hour-weather-style.css}" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
+		/>
+	</head>
+	<body>
+		<div class="container">
+			<nav>
+				<img
+					class="app-name"
+					src="/img/weatherSpot1.png"
+					height="25"
+					width="25"
+				/>
+				<h1 class="app-name">WeatherSpot</h1>
+				<a
+					class="nav-link"
+					th:href="@{/historical-weather(location=${location}, date=${date})}"
+					><span>History</span></a
+				>
+				<a
+					class="nav-link"
+					th:href="@{/daily-weather(location=${location})}"
+					><span>Daily</span></a
+				>
+				<a
+					class="nav-link"
+					th:href="@{/current-weather(location=${location})}"
+					><span>Current</span></a
+				>
+				<span class="form">
+					<form method="GET" th:action="@{/hourly-weather}">
+						<input
+							class="place"
+							type="search"
+							name="location"
+							placeholder="Hourly Forecast Search"
+							required
+						/>
+						<input type="submit" class="search" value="Search" />
+					</form>
+				</span>
+			</nav>
+			<div class="location">
+				<h1
+					data-aos="slide-right"
+					data-aos-delay="0"
+					data-aos-duration="800"
+					th:text="${weather.get(0).name}"
+				></h1>
+				<span
+					data-aos="slide-left"
+					data-aos-delay="0"
+					data-aos-duration="800"
+					th:text="${weather.get(0).address}"
+				></span>
+			</div>
+			<div
+				data-aos="zoom-in"
+				data-aos-delay="0"
+				data-aos-duration="900"
+				class="all-details-div"
+				th:each="forecast : ${weather}"
+			>
+				<div class="first-div">
+					<div class="date-div">
+						<span th:text="${forecast.day}"></span><span>-</span>
+						<span th:text="${forecast.time}"></span>
+					</div>
+					<div class="temp-div">
+						<img
+							th:src="@{'/img/' + ${forecast.icon} + '.png'}"
+							height="80"
+							width="80"
+						/>
+						<h3 th:text="${forecast.temp}"></h3>
+						<span class="degree">&deg;C</span>
+					</div>
+					<div class="description-div">
+						<span th:text="${forecast.conditions}"></span>
+					</div>
+				</div>
+
+				<div class="line"></div>
+
+				<div class="second-div">
+					<div class="feellike-div">
+						<img
+							src="/img/temperature.png"
+							height="30"
+							width="42"
+						/>
+						<span>Feel like:&nbsp;</span>
+						<span th:text="${forecast.feelslike}">35.8</span>
+						<span>&deg;C</span>
+					</div>
+
+					<div class="line2"></div>
+
+					<div class="third-div">
+						<div class="wind-div extra">
+							<img
+								class="third-div-img"
+								src="/img/wind.png"
+								height="18"
+								width="18"
+							/>
+							<span>&nbsp;Wind Speed:&nbsp;&nbsp;&nbsp;</span
+							><span th:text="${forecast.direction}">SW</span
+							><span>&nbsp;</span
+							><span th:text="${forecast.windspeed}">23.3</span
+							><span>KM/H</span>
+						</div>
+
+						<div class="cloud-div extra">
+							<img
+								class="third-div-img"
+								src="/img/cloud.png"
+								height="18"
+								width="18"
+							/>
+							<span>&nbsp;Cloud Cover: &nbsp;&nbsp;</span
+							><span th:text="${forecast.cloudcover}">63.4</span
+							><span>%</span>
+						</div>
+
+						<div class="windgust-div extra">
+							<img
+								class="third-div-img"
+								src="/img/wind1.png"
+								height="18"
+								width="18"
+							/>
+							<span>&nbsp;Wind Gusts:&nbsp;&nbsp;&nbsp; </span
+							><span th:text="${forecast.windgust}">22.4</span
+							><span>&nbsp;</span><span>KM/H</span>
+						</div>
+
+						<div class="humidity-div extra">
+							<img
+								class="third-div-img"
+								src="/img/humidity2.png"
+								height="18"
+								width="18"
+							/>
+							<span
+								>&nbsp;Humidity:
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span
+							><span th:text="${forecast.humidity}">61.1</span
+							><span>%</span>
+						</div>
+
+						<div class="windgust-div extra">
+							<img
+								class="third-div-img"
+								src="/img/wind1.png"
+								height="18"
+								width="18"
+							/>
+							<span>&nbsp;Precipitation: &nbsp;</span
+							><span th:text="${forecast.precipprob}">0</span
+							><span>&nbsp;</span><span>%</span>
+						</div>
+
+						<div class="dew-div extra">
+							<img
+								class="third-div-img"
+								src="/img/dew2.png"
+								height="18"
+								width="18"
+							/>
+							<span
+								>&nbsp;Dew:
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span
+							><span th:text="${forecast.dew}">20.2</span
+							><span>&deg;C</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="spinner"></div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+		<script th:src="@{/js/app.js}"></script>
+	</body>
+</html>

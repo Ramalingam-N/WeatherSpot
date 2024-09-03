@@ -1,0 +1,120 @@
+* {
+	margin: 0;
+	font-size: 10px;
+}
+
+body {
+	height: 100vh;
+	background-image: url("/img/background12.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	color: white;
+}
+.error-div {
+	display: flex;
+	flex-direction: column;
+	gap: 0.6rem;
+	align-items: center;
+	font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+	width: fit-content;
+	margin: 8rem auto auto auto;
+	color: #fffafb;
+
+	animation: fadeIn 1s ease-in-out;
+}
+
+.error-div h2 {
+	font-size: 16rem;
+}
+
+.error-div h4 {
+	font-size: 2.4rem;
+	margin: -2.4rem auto 3rem auto;
+}
+
+.error-div p {
+	font-size: 1.6rem;
+	margin-bottom: 0rem;
+}
+
+.btn {
+	display: inline-block;
+	margin-top: 1rem;
+	padding: 0.8rem 2rem;
+	font-size: 1.2rem;
+	color: #fff;
+	cursor: pointer;
+	background-color: #007bff;
+	text-decoration: none;
+	border-radius: 0.5rem;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.btn:hover {
+	background-color: #0056b3;
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+.container {
+	height: 100vh;
+	background: rgba(0, 0, 0, 0.5);
+}
+
+.spinner {
+	position: fixed;
+	display: none;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	--d: 22px;
+	width: 4px;
+	height: 4px;
+	border-radius: 50%;
+	color: #ffffff;
+	box-shadow: calc(1 * var(--d)) calc(0 * var(--d)) 0 0,
+		calc(0.707 * var(--d)) calc(0.707 * var(--d)) 0 1px,
+		calc(0 * var(--d)) calc(1 * var(--d)) 0 2px,
+		calc(-0.707 * var(--d)) calc(0.707 * var(--d)) 0 3px,
+		calc(-1 * var(--d)) calc(0 * var(--d)) 0 4px,
+		calc(-0.707 * var(--d)) calc(-0.707 * var(--d)) 0 5px,
+		calc(0 * var(--d)) calc(-1 * var(--d)) 0 6px;
+	animation: l27 1s infinite steps(8);
+}
+@keyframes l27 {
+	100% {
+		transform: translate(-50%, -50%) rotate(1turn);
+	}
+}
+
+nav {
+	height: 7.8rem;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 4.2rem;
+	letter-spacing: 1px;
+	box-shadow: 5px 3px 8px 3px rgb(46, 71, 105);
+}
+
+nav img {
+	margin-left: 8rem;
+	cursor: pointer;
+}
+
+nav h1 {
+	font-size: 2.6rem;
+	margin-left: -3.4rem !important;
+	margin-right: 2.6rem;
+	cursor: pointer;
+	font-family: sans-serif;
+}

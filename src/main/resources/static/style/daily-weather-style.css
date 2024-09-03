@@ -1,0 +1,292 @@
+* {
+	margin: 0;
+	font-size: 10px;
+}
+
+body {
+	height: 100vh;
+	background-image: url("/img/background12.jpg");
+	overflow-x: hidden;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+	overflow-y: scroll;
+	color: white;
+}
+
+.container {
+	padding-bottom: 8rem;
+	background: rgba(0, 0, 0, 0.5);
+}
+
+.spinner {
+	position: fixed;
+	display: none;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	--d: 22px;
+	width: 4px;
+	height: 4px;
+	border-radius: 50%;
+	color: #ffffff;
+	box-shadow: calc(1 * var(--d)) calc(0 * var(--d)) 0 0,
+		calc(0.707 * var(--d)) calc(0.707 * var(--d)) 0 1px,
+		calc(0 * var(--d)) calc(1 * var(--d)) 0 2px,
+		calc(-0.707 * var(--d)) calc(0.707 * var(--d)) 0 3px,
+		calc(-1 * var(--d)) calc(0 * var(--d)) 0 4px,
+		calc(-0.707 * var(--d)) calc(-0.707 * var(--d)) 0 5px,
+		calc(0 * var(--d)) calc(-1 * var(--d)) 0 6px;
+	animation: l27 1s infinite steps(8);
+}
+@keyframes l27 {
+	100% {
+		transform: translate(-50%, -50%) rotate(1turn);
+	}
+}
+
+nav {
+	height: 7.8rem;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 4.2rem;
+	position: fixed !important;
+	top: 0;
+	width: 100vw;
+	z-index: 2;
+	background-image: url("/img/background71.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	letter-spacing: 1px;
+	box-shadow: 5px 3px 8px 3px rgb(46, 71, 105);
+}
+
+nav img {
+	margin-left: 8rem;
+	cursor: pointer;
+}
+
+nav h1 {
+	font-size: 2.6rem;
+	margin-left: -3.4rem !important;
+	margin-right: 2.6rem;
+	cursor: pointer;
+	font-family: sans-serif;
+}
+
+nav a {
+	text-decoration: none;
+	color: white;
+}
+
+nav span {
+	font-size: 2rem;
+	cursor: pointer;
+}
+
+nav span:hover {
+	color: rgb(176, 173, 173);
+	transition: color 0.5s;
+}
+
+.form {
+	margin-left: 24rem;
+}
+
+form {
+	width: fit-content;
+	margin: 0rem auto 0 auto;
+	display: flex;
+	flex-direction: row;
+	font-size: 1rem;
+	gap: 1rem;
+}
+
+.place {
+	height: 3.2rem;
+	width: 26rem;
+	font-size: 1.1rem;
+	padding-left: 1.8rem;
+	background-color: aliceblue;
+	border: none;
+	border-radius: 6px;
+}
+
+.place::placeholder {
+	color: rgb(2, 21, 77);
+}
+
+.place:hover {
+	box-shadow: 0px 0px 4px 2px rgb(172, 172, 172);
+	transition: box-shadow 0.5s;
+}
+
+.place:active {
+	box-shadow: 0px 0px 4px 2px rgb(172, 172, 172);
+}
+
+.disable-pointer-hover * {
+	pointer-events: none;
+	cursor: default !important;
+}
+
+.disable-pointer-hover *:hover {
+	pointer-events: none;
+}
+
+.disable-pointer-hover nav {
+	position: fixed; /* Re-enforce fixed position */
+}
+
+.search {
+	padding: 0rem 2rem;
+	border: none;
+	font-size: 1rem;
+	border-radius: 6px;
+	background-color: rgb(53, 113, 154);
+	color: white;
+	cursor: pointer;
+	letter-spacing: 0.9px;
+}
+
+.search:hover {
+	background-color: rgb(10, 59, 88);
+	transition: background-color 0.5s;
+}
+
+.location {
+	padding-top: 12rem;
+}
+
+.location h1 {
+	font-size: 3.8rem;
+	text-align: center;
+	margin-bottom: 0.5rem;
+	letter-spacing: 1px;
+	font-family: "Arial Narrow Bold", sans-serif;
+	text-shadow: 0px 0px 8px rgb(239, 239, 239);
+}
+
+.location span {
+	font-size: 1.2rem;
+	text-align: center;
+	display: block;
+	letter-spacing: 0.9px;
+}
+
+.all-details-div {
+	margin: 5rem auto 0 auto;
+	padding: 4rem 5rem;
+	backdrop-filter: blur(260px);
+	border-radius: 1rem;
+	width: fit-content;
+	display: flex;
+	align-items: center;
+	gap: 5rem;
+}
+
+.all-details-div:hover {
+	backdrop-filter: blur(1020px);
+	transition: backdrop-filter 0.5s;
+}
+
+.first-div {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 2.4rem;
+}
+
+.date-div {
+	display: flex;
+	gap: 0.3rem;
+	align-items: center;
+}
+
+.date-div span {
+	font-family: Lucida Console;
+	text-shadow: 0px 0px 6px white;
+	font-size: 1.8rem;
+}
+
+.description {
+	font-size: 2rem;
+	font-family: Calibri, "Trebuchet MS", sans-serif;
+	letter-spacing: 1px;
+}
+
+.max-min {
+	display: flex;
+	gap: 1.4rem;
+	font-family: "Arial Narrow", Arial, sans-serif;
+}
+
+.max span {
+	font-size: 2.2rem;
+}
+
+.min span {
+	font-size: 2.2rem;
+}
+
+.line {
+	height: 15rem;
+	border-left: solid 1px rgb(147, 147, 147);
+}
+
+.second-div {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	align-items: center;
+}
+
+.temp {
+	display: flex;
+	align-items: center;
+	font-family: monospace;
+	gap: 1rem;
+}
+
+.temp span {
+	font-size: 10rem;
+}
+
+.degree {
+	font-size: 5rem !important;
+}
+
+.feel-div {
+	display: flex;
+	align-items: center;
+}
+
+.feel-div span {
+	font-size: 1.8rem;
+	letter-spacing: 1px;
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.third-div {
+	display: flex;
+	flex-direction: column;
+	gap: 1.6rem;
+	padding: 0 2rem;
+}
+
+.third-div div {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.extra span {
+	font-size: 1.4rem;
+	font-family: Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.third-div-img {
+	margin-right: 0.6rem;
+}

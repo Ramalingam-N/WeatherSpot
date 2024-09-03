@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+	<head>
+		<meta charset="UTF-8" />
+		<title>WeatherSpot</title>
+		<link rel="icon" th:href="@{/img/weatherSpot1.png}" type="image/png" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
+		/>
+		<link rel="stylesheet" th:href="@{/style/current-weather-style.css}" />
+	</head>
+	<body>
+		<div class="container">
+			<nav>
+				<img
+					class="app-name"
+					src="/img/weatherSpot1.png"
+					height="25"
+					width="25"
+				/>
+				<h1 class="app-name">WeatherSpot</h1>
+				<a
+					class="nav-link"
+					th:href="@{/historical-weather(location=${location}, date=${date})}"
+					><span>History</span></a
+				>
+				<a
+					class="nav-link daily-link"
+					th:href="@{/daily-weather(location=${location})}"
+					><span>Daily</span></a
+				>
+				<a
+					class="nav-link hourly-link"
+					th:href="@{/hourly-weather(location=${location})}"
+					><span>Hourly</span></a
+				>
+			</nav>
+			<form method="GET" th:action="@{/current-weather}">
+				<input
+					class="place"
+					type="search"
+					name="location"
+					placeholder="Instant Weather Lookup"
+					required
+				/>
+				<input type="submit" class="search" value="Search" />
+			</form>
+			<div class="temp-details">
+				<div
+					data-aos="zoom-in"
+					data-aos-delay="100"
+					data-aos-duration="1600"
+					class="curr-temp-div"
+				>
+					<div class="location-temp">
+						<h2 th:text="${weather.name}"></h2>
+						<h4 th:text="${weather.address}">TN, India</h4>
+						<div class="logo-temp">
+							<img
+								th:src="@{'/img/' + ${weather.currentConditions.icon} + '.png'}"
+								height="84"
+								width="84"
+							/>
+							<div class="curr-temp">
+								<span
+									th:text="${weather.currentConditions.temp}"
+									class="temp"
+								></span>
+								<span class="curr-temp-degree">&deg;C</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div
+					data-aos="flip-right"
+					data-aos-delay="0"
+					data-aos-duration="400"
+					class="feel-like-temp-div"
+				>
+					<div class="feel-like">
+						<img
+							src="/img/temperature.png"
+							height="32"
+							width="48"
+						/>
+						<span class="feel-like-text"
+							>&nbsp;Feel like&nbsp;</span
+						>
+						<span
+							class="feel-like-temp"
+							th:text="${weather.currentConditions.feelslike}"
+						></span>
+						<span class="feel-like-degree">&nbsp;&deg;C</span>
+					</div>
+				</div>
+				<div
+					data-aos="flip-right"
+					data-aos-delay="400"
+					data-aos-duration="400"
+					class="max-min-div"
+				>
+					<div class="description-div">
+						<span
+							class="description"
+							th:text="${weather.currentConditions.conditions}"
+						></span>
+					</div>
+					<div class="max-min">
+						<div class="max">
+							<img src="/img/up.png" height="20" width="30" />
+							<span>Max:&nbsp;</span>
+							<span
+								th:text="${weather.days.get(0).tempmax}"
+							></span>
+							<span>&deg;C</span>
+						</div>
+						<div class="min">
+							<img src="/img/down.png" height="20" width="30" />
+							<span>Min:&nbsp;</span>
+							<span
+								th:text="${weather.days.get(0).tempmin}"
+							></span>
+							<span>&deg;C</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="extra-details-div">
+				<div
+					data-aos="flip-right"
+					data-aos-delay="800"
+					data-aos-duration="400"
+					class="sun-details extra-details"
+				>
+					<div class="sun-rise-div extra">
+						<img src="/img/sunrise.png" height="18" width="22" />
+						<span>Sunrise:&nbsp;&nbsp;&nbsp; </span>
+						<span
+							th:text="${weather.currentConditions.sunrise}"
+						></span>
+					</div>
+					<div class="sun-set-div extra">
+						<img src="/img/sunset.png" height="18" width="22" />
+						<span>Sunset:&nbsp;&nbsp;&nbsp;&nbsp; </span>
+						<span
+							th:text="${weather.currentConditions.sunset}"
+						></span>
+					</div>
+				</div>
+				<div
+					data-aos="flip-right"
+					data-aos-delay="1200"
+					data-aos-duration="400"
+					class="wind-details-div extra-details"
+				>
+					<div class="wind-dir-speed-div extra">
+						<img src="/img/wind.png" height="18" width="22" />
+						<span>&nbsp;Wind Speed: &nbsp;&nbsp;&nbsp;</span>
+						<span
+							th:text="${weather.currentConditions.direction}"
+						></span>
+						<span>&nbsp;</span>
+						<span
+							th:text="${weather.currentConditions.windspeed}"
+						></span>
+						<span>&nbsp;KM/H</span>
+					</div>
+					<div class="wind-gust-div extra">
+						<img src="/img/wind1.png" height="18" width="22" />
+						<span>&nbsp;Wind Gusts: &nbsp;&nbsp;&nbsp;&nbsp;</span>
+						<span th:text="${weather.days.get(0).windgust}"> </span>
+						<span>&nbsp;</span>
+						<span>KM/H</span>
+					</div>
+				</div>
+				<div
+					data-aos="flip-right"
+					data-aos-delay="1600"
+					data-aos-duration="400"
+					class="dew-humidity-div extra-details"
+				>
+					<div class="dew-div extra">
+						<img src="/img/dew2.png" height="18" width="22" />
+						<span
+							>&nbsp;Dew:
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span
+						>
+						<span th:text="${weather.currentConditions.dew}"></span>
+						<span>&deg;C</span>
+					</div>
+					<div class="humidity-div extra">
+						<img src="/img/humidity2.png" height="18" width="22" />
+						<span>&nbsp;Humidity: &nbsp;&nbsp;&nbsp;</span>
+						<span
+							th:text="${weather.currentConditions.humidity}"
+						></span>
+						<span>%</span>
+					</div>
+				</div>
+				<div
+					data-aos="flip-right"
+					data-aos-delay="2000"
+					data-aos-duration="400"
+					class="uv-cloud-div extra-details"
+				>
+					<div class="cloud-div extra">
+						<img src="/img/cloud.png" height="18" width="22" />
+						<span>&nbsp;Cloud Cover: &nbsp;&nbsp;</span>
+						<span
+							th:text="${weather.currentConditions.cloudcover}"
+						></span>
+						<span>%</span>
+					</div>
+					<div class="uv-div extra">
+						<img src="/img/uv-index.png" height="18" width="22" />
+						<span>&nbsp;&nbsp;UV Index: &nbsp;&nbsp;&nbsp;</span>
+						<span
+							th:text="${weather.currentConditions.uvindex}"
+						></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="spinner"></div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+		<script th:src="@{/js/current-historical.js}"></script>
+	</body>
+</html>

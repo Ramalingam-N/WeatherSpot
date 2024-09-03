@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+	<head>
+		<meta charset="UTF-8" />
+		<title>WeatherSpot</title>
+		<link rel="icon" th:href="@{/img/weatherSpot1.png}" type="image/png" />
+		<link rel="stylesheet" th:href="@{/style/error-style.css}" />
+	</head>
+	<body>
+		<div class="container">
+			<nav>
+				<img
+					src="/img/weatherSpot1.png"
+					height="25"
+					width="25"
+					alt="WeatherSpot Logo"
+				/>
+				<h1 class="app-name">WeatherSpot</h1>
+			</nav>
+			<div class="error-div">
+				<h2>500</h2>
+				<h4>Internal Server Error</h4>
+				<p>
+					Oops! Something went wrong on our end or with your
+					connection. Please try again later.
+				</p>
+				<a class="btn">Go Back</a>
+			</div>
+		</div>
+		<div class="spinner"></div>
+		<script>
+			function loadingOn() {
+				document.querySelector(".spinner").style.display = "block";
+				document.querySelector(".container").style.filter = "blur(6px)";
+				document.body.classList.add("disable-pointer-hover");
+			}
+
+			function loadingOff() {
+				document.querySelector(".container").style.filter = "none";
+				document.querySelector(".spinner").style.display = "none";
+				document.body.classList.remove("disable-pointer-hover");
+			}
+
+			document
+				.querySelector(".btn")
+				.addEventListener("click", function () {
+					loadingOn();
+					history.back();
+					setTimeout(() => {
+						loadingOff();
+					}, 7000);
+				});
+
+			window.addEventListener("pageshow", function () {
+				loadingOff();
+			});
+			loadingOff();
+		</script>
+	</body>
+</html>

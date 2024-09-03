@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+	<head>
+		<meta charset="UTF-8" />
+		<title>WeatherSpot</title>
+		<link rel="icon" th:href="@{/img/weatherSpot1.png}" type="image/png" />
+		<style>
+			* {
+				margin: 0;
+				font-size: 10px;
+			}
+
+			body {
+				height: 100vh;
+				background-image: url("/img/background12.jpg");
+				background-repeat: no-repeat;
+				background-size: cover;
+				background-position: center;
+				color: white;
+			}
+			.error-div {
+				position: fixed;
+				font-family: "Trebuchet MS", "Lucida Sans Unicode",
+					"Lucida Grande", "Lucida Sans", Arial, sans-serif;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				color: #fffafb;
+				text-align: center;
+				padding: 5rem 5rem;
+				letter-spacing: 1px;
+				border-radius: 2rem;
+				backdrop-filter: blur(500px);
+				box-shadow: 0 0 15px 1px rgb(4, 23, 55);
+				animation: fadeIn 1s ease-in-out;
+			}
+
+			.error-div p {
+				font-size: 2rem;
+				line-height: 3rem;
+				margin-bottom: 1.8rem;
+			}
+
+			.btn {
+				display: inline-block;
+				margin-top: 1rem;
+				padding: 0.8rem 2rem;
+				font-size: 1.2rem;
+				color: #fff;
+				cursor: pointer;
+				background-color: #007bff;
+				text-decoration: none;
+				border-radius: 0.5rem;
+				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+				transition: background-color 0.3s, box-shadow 0.3s;
+			}
+
+			.btn:hover {
+				background-color: #0056b3;
+				box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+			}
+
+			@keyframes fadeIn {
+				from {
+					opacity: 0;
+				}
+				to {
+					opacity: 1;
+				}
+			}
+			.container {
+				height: 100vh;
+				background: rgba(0, 0, 0, 0.5);
+			}
+
+			.spinner {
+				position: fixed;
+				display: none;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				--d: 22px;
+				width: 4px;
+				height: 4px;
+				border-radius: 50%;
+				color: #ffffff;
+				box-shadow: calc(1 * var(--d)) calc(0 * var(--d)) 0 0,
+					calc(0.707 * var(--d)) calc(0.707 * var(--d)) 0 1px,
+					calc(0 * var(--d)) calc(1 * var(--d)) 0 2px,
+					calc(-0.707 * var(--d)) calc(0.707 * var(--d)) 0 3px,
+					calc(-1 * var(--d)) calc(0 * var(--d)) 0 4px,
+					calc(-0.707 * var(--d)) calc(-0.707 * var(--d)) 0 5px,
+					calc(0 * var(--d)) calc(-1 * var(--d)) 0 6px;
+				animation: l27 1s infinite steps(8);
+			}
+			@keyframes l27 {
+				100% {
+					transform: translate(-50%, -50%) rotate(1turn);
+				}
+			}
+
+			nav {
+				height: 7.8rem;
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				gap: 4.2rem;
+				letter-spacing: 1px;
+				box-shadow: 5px 3px 8px 3px rgb(46, 71, 105);
+			}
+
+			nav img {
+				margin-left: 8rem;
+				cursor: pointer;
+			}
+
+			nav h1 {
+				font-size: 2.6rem;
+				margin-left: -3.4rem !important;
+				margin-right: 2.6rem;
+				cursor: pointer;
+				font-family: sans-serif;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<nav>
+				<img
+					src="/img/weatherSpot1.png"
+					height="25"
+					width="25"
+					alt="WeatherSpot Logo"
+				/>
+				<h1 class="app-name">WeatherSpot</h1>
+			</nav>
+			<div class="error-div">
+				<p>
+					There’s a temporary problem accessing the data. Please come
+					back later. We appreciate your patience!
+				</p>
+				<a class="btn">Go Back</a>
+			</div>
+		</div>
+		<div class="spinner"></div>
+		<script>
+			function loadingOn() {
+				document.querySelector(".spinner").style.display = "block";
+				document.querySelector(".container").style.filter = "blur(6px)";
+				document.body.classList.add("disable-pointer-hover");
+			}
+
+			function loadingOff() {
+				document.querySelector(".container").style.filter = "none";
+				document.querySelector(".spinner").style.display = "none";
+				document.body.classList.remove("disable-pointer-hover");
+			}
+
+			document
+				.querySelector(".btn")
+				.addEventListener("click", function () {
+					loadingOn();
+					history.back();
+					setTimeout(() => {
+						loadingOff();
+					}, 7000);
+				});
+
+			window.addEventListener("pageshow", function () {
+				loadingOff();
+			});
+			loadingOff();
+		</script>
+	</body>
+</html>
