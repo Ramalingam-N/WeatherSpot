@@ -17,21 +17,21 @@ import java.util.Random;
 @Service
 public class WeatherService {
     private RestTemplate restTemplate;
-    private Environment environment;
 
     private String apiKey1;
     private String apiKey2;
+    private String apiKey3;
     private String locationAPIKey;
 
 
     public WeatherService(RestTemplate restTemplate, Environment environment) {
         this.restTemplate = restTemplate;
-        this.environment = environment;
 
         apiKey1 = environment.getProperty("visualcrossing.api-key-1");
         apiKey2 = environment.getProperty("visualcrossing.api-key-2");
+        apiKey3 = environment.getProperty("visualcrossing.api-key-3");
 
-        locationAPIKey = environment.getProperty("location.api-key1");
+        locationAPIKey = environment.getProperty("location.api-key");
     }
     
     String[] cities = {
@@ -64,7 +64,7 @@ public class WeatherService {
     };
 
     public WeatherResponse getWeather(String location) {
-        String apiUrl = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + location + "?unitGroup=metric&key="+apiKey1;
+        String apiUrl = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + location + "?unitGroup=metric&key="+apiKey3;
         WeatherResponse weatherResponse = null;
         boolean flag1 = false;
         try {
