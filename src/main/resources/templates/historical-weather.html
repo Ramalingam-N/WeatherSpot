@@ -1,269 +1,150 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8" />
-		<title>WeatherSpot</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Historical Weather | WeatherSpot</title>
+		
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 		<link rel="icon" th:href="@{/img/weatherSpot1.png}" type="image/png" />
-		<link
-			rel="stylesheet"
-			th:href="@{/style/historical-weather-style.css}"
-		/>
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
-		/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+		<link rel="stylesheet" th:href="@{/style/historical-weather-style.css}" />
 	</head>
 	<body>
 		<div class="container">
 			<nav>
-				<img
-					class="app-name"
-					src="/img/weatherSpot1.png"
-					height="25"
-					width="25"
-				/>
-				<h1 class="app-name">WeatherSpot</h1>
-				<a
-					class="nav-link"
-					th:href="@{/daily-weather(location=${location})}"
-					><span>Daily</span></a
-				>
-				<a
-					class="nav-link"
-					th:href="@{/hourly-weather(location=${location})}"
-					><span>Hourly</span></a
-				>
-				<a
-					class="nav-link"
-					th:href="@{/current-weather(location=${location})}"
-					><span>Current</span></a
-				>
-				<span class="last-nav"
-					>This is the oldest available weather data for this
-					location</span
-				>
+				<a th:href="@{/}" class="brand">
+					<img class="app-name" th:src="@{/img/weatherSpot1.png}" alt="WeatherSpot Logo" />
+					<h1 class="app-name">WeatherSpot</h1>
+				</a>
+				<div class="nav-links">
+					<a class="nav-link active" th:href="@{/historical-weather(location=${location}, date=${date})}">History</a>
+					<a class="nav-link" th:href="@{/daily-weather(location=${location})}">Daily</a>
+					<a class="nav-link" th:href="@{/hourly-weather(location=${location})}">Hourly</a>
+					<a class="nav-link" th:href="@{/current-weather(location=${location})}">Current</a>
+				</div>
 			</nav>
 
-			<form>
-				<input
-					class="place"
-					type="search"
-					name="location"
-					placeholder="Historical Search"
-					required
-				/>
-				<input
-					class="calendar"
-					type="date"
-					name="date"
-					min="1973-01-01"
-					required
-				/>
-				<input type="submit" class="search" value="Search" />
-			</form>
-			<div class="location-div">
-				<h2
-					data-aos="slide-left"
-					data-aos-delay="0"
-					data-aos-duration="600"
-					th:text="${weather.name}"
-				>
-					DHALAVAIPURAM
-				</h2>
-				<span
-					data-aos="slide-right"
-					data-aos-delay="0"
-					data-aos-duration="600"
-					th:text="${weather.address}"
-					>Rajapalayam Sub-District, TN, India</span
-				>
+			<div class="last-nav-banner">
+				<span class="last-nav">This is the oldest available weather data for this location</span>
 			</div>
 
-			<div class="arrow-fix">
-				<div class="previous-arrow arrow"><</div>
-				<div class="next-arrow arrow">></div>
-				<div class="div-container">
-					<div class="div-content">
-						<div
-							th:each="history, iterStat : ${weather.days}"
-							th:classappend="'div' + ${iterStat.index}"
-							class="all-details-div"
-						>
-							<div class="first-div">
-								<div class="date-div">
-									<span th:text="${history.formattedDate}"
-										>12-04-2004</span
-									>
-									<span>&nbsp;-&nbsp;</span>
-									<span th:text="${history.day}">Wed</span>
-								</div>
-								<div class="temp-div">
-									<img
-										th:src="@{'/img/' + ${history.icon} + '.png'}"
-										height="90"
-										width="90"
-									/>
-									<div class="curr-temp">
-										<span
-											th:text="${history.temp}"
-											class="temp"
-											>35.8</span
-										>
-										<span class="curr-temp-degree"
-											>&deg;C</span
-										>
-									</div>
-								</div>
-								<div class="description-div">
-									<span th:text="${history.conditions}"
-										>Rain, Partially cloudy</span
-									>
-								</div>
-							</div>
-							<div class="line"></div>
-							<div class="second-div">
-								<div class="feellike-div">
-									<img
-										style="margin-right: 0.6rem"
-										src="/img/temperature.png"
-										height="22"
-										width="48"
-									/>
-									<span>Feel Like:&nbsp;</span
-									><span th:text="${history.feelslike}"
-										>37.6</span
-									><span>&deg;C</span>
-								</div>
-								<div class="horizontal-line"></div>
-								<div class="max-min-div">
-									<div class="max-div">
-										<img
-											src="/img/up.png"
-											height="20"
-											width="30"
-										/>
-										<span>Max:&nbsp;</span
-										><span th:text="${history.tempmax}"
-											>38.2</span
-										><span>&deg;C</span>
-									</div>
-									<div class="min-div">
-										<img
-											src="/img/down.png"
-											height="20"
-											width="30"
-										/>
-										<span>Min:&nbsp;</span
-										><span th:text="${history.tempmin}"
-											>31.9</span
-										><span>&deg;C</span>
-									</div>
-								</div>
-								<div class="horizontal-line"></div>
-								<div class="extra-details-div">
-									<div class="wind-div extra">
-										<img
-											class="third-div-img"
-											src="/img/wind.png"
-											height="18"
-											width="18"
-										/>
-										<span
-											>&nbsp;Wind Speed:
-											&nbsp;&nbsp;</span
-										><span th:text="${history.direction}"
-											>SW</span
-										><span>&nbsp;</span
-										><span th:text="${history.windspeed}"
-											>23.3</span
-										><span>KM/H</span>
-									</div>
-									<div class="cloudcover-div extra">
-										<img
-											class="third-div-img"
-											src="/img/cloud.png"
-											height="18"
-											width="18"
-										/>
-										<span
-											>&nbsp;Cloud Cover:
-											&nbsp;&nbsp;&nbsp;</span
-										><span th:text="${history.cloudcover}"
-											>63.4</span
-										><span>%</span>
-									</div>
-
-									<div class="sunrise-div extra">
-										<img
-											class="third-div-img"
-											src="/img/sunrise.png"
-											height="18"
-											width="18"
-										/>
-										<span
-											>&nbsp;Sunrise:
-											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span
-										><span th:text="${history.sunrise}">
-											06:09:42</span
-										>
-									</div>
-									<div class="sunset-div extra">
-										<img
-											class="third-div-img"
-											src="/img/sunset.png"
-											height="18"
-											width="18"
-										/>
-										<span
-											>&nbsp;Sunset:
-											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span
-										><span th:text="${history.sunset}">
-											18:43:28</span
-										>
-									</div>
-
-									<div class="humidity extra">
-										<img
-											class="third-div-img"
-											src="/img/humidity2.png"
-											height="18"
-											width="18"
-										/>
-										<span
-											>&nbsp;Humidity:
-											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span
-										><span th:text="${history.humidity}"
-											>61.1</span
-										><span>%</span>
-									</div>
-									<div class="dew-div extra">
-										<img
-											class="third-div-img"
-											src="/img/dew.png"
-											height="18"
-											width="18"
-										/>
-										<span
-											>&nbsp;Dew:
-											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span
-										><span th:text="${history.dew}"
-											>20.2</span
-										><span>&deg;C</span>
-									</div>
-								</div>
-							</div>
-						</div>
+			<main class="main-content">
+				<form method="GET" th:action="@{/historical-weather}" class="search-form">
+					<div class="search-wrapper">
+						<input class="place" type="search" name="location" placeholder="Search a city..." required />
+						<input class="calendar" type="date" name="date" min="1973-01-01" required />
+						<button type="submit" class="search-btn">Search</button>
 					</div>
+				</form>
+
+				<div class="location-header" data-aos="fade-down" data-aos-duration="600">
+					<h2 th:text="${weather.name}">City Name</h2>
+					<p th:text="${weather.address}">Region, Country</p>
 				</div>
-			</div>
-			<div class="pages">
-				<div class="page0 hidden">&nbsp;</div>
-				<div class="page1 hidden">&nbsp;</div>
-				<div class="page2 hidden">&nbsp;</div>
-				<div class="page3 hidden">&nbsp;</div>
-				<div class="page4 hidden">&nbsp;</div>
-			</div>
+
+				<div class="slider-wrapper">
+					<button class="arrow previous-arrow" aria-label="Previous">&lt;</button>
+					
+					<div class="div-container">
+						<div class="div-content">
+							
+							<div th:each="history, iterStat : ${weather.days}" th:classappend="'div' + ${iterStat.index}" class="all-details-div glass-card">
+								
+								<div class="history-main-info">
+									<div class="date-block">
+										<span class="date-text" th:text="${history.formattedDate}">12-04-2004</span>
+										<span class="day-text" th:text="${history.day}">Wed</span>
+									</div>
+									
+									<div class="temp-block">
+										<img th:src="@{'/img/' + ${history.icon} + '.png'}" alt="Weather Icon" class="weather-icon" />
+										<div class="temp-display">
+											<h3 th:text="${history.temp}"></h3>
+											<span class="degree">&deg;C</span>
+										</div>
+									</div>
+									
+									<div class="condition-block">
+										<span th:text="${history.conditions}">Rain, Partially cloudy</span>
+									</div>
+								</div>
+								
+								<div class="card-divider"></div>
+								
+								<div class="history-stats-info">
+									<div class="top-stats">
+										<div class="stat-item feels-like">
+											<img src="/img/temperature.png" alt="Feels Like" />
+											<span>Feel Like: </span>
+											<strong th:text="${history.feelslike} + '&deg;C'"></strong>
+										</div>
+										<div class="min-max-block">
+											<div class="stat-item">
+												<img src="/img/up.png" alt="Max" />
+												<span>Max: </span>
+												<strong th:text="${history.tempmax} + '&deg;C'"></strong>
+											</div>
+											<div class="stat-item">
+												<img src="/img/down.png" alt="Min" />
+												<span>Min: </span>
+												<strong th:text="${history.tempmin} + '&deg;C'"></strong>
+											</div>
+										</div>
+									</div>
+
+									<div class="horizontal-line"></div>
+
+									<div class="extra-details-grid">
+										<div class="stat-item">
+											<img src="/img/wind.png" alt="Wind" />
+											<span>Wind: </span>
+											<strong><span th:text="${history.direction}"></span> <span th:text="${history.windspeed}"></span> km/h</strong>
+										</div>
+										<div class="stat-item">
+											<img src="/img/cloud.png" alt="Clouds" />
+											<span>Clouds: </span>
+											<strong th:text="${history.cloudcover} + '%'"></strong>
+										</div>
+										<div class="stat-item">
+											<img src="/img/sunrise.png" alt="Sunrise" />
+											<span>Sunrise: </span>
+											<strong th:text="${history.sunrise}"></strong>
+										</div>
+										<div class="stat-item">
+											<img src="/img/sunset.png" alt="Sunset" />
+											<span>Sunset: </span>
+											<strong th:text="${history.sunset}"></strong>
+										</div>
+										<div class="stat-item">
+											<img src="/img/humidity2.png" alt="Humidity" />
+											<span>Humidity: </span>
+											<strong th:text="${history.humidity} + '%'"></strong>
+										</div>
+										<div class="stat-item">
+											<img src="/img/dew2.png" alt="Dew Point" />
+											<span>Dew: </span>
+											<strong th:text="${history.dew} + '&deg;C'"></strong>
+										</div>
+									</div>
+								</div>
+							</div>
+							</div>
+					</div>
+					
+					<button class="arrow next-arrow" aria-label="Next">&gt;</button>
+				</div>
+
+				<div class="pages">
+					<div class="page0 dot hidden"></div>
+					<div class="page1 dot hidden"></div>
+					<div class="page2 dot hidden"></div>
+					<div class="page3 dot hidden"></div>
+					<div class="page4 dot hidden"></div>
+				</div>
+			</main>
 		</div>
+		
 		<div class="spinner"></div>
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
@@ -274,142 +155,96 @@
 		</script>
 
 		<script>
-			console.log("Info ---- ", info);
+			// Feature toggle based on info flag
 			if (info === false || info == null) {
-				document.querySelector(".last-nav").style.display = "none";
+				const lastNav = document.querySelector(".last-nav-banner");
+				if(lastNav) lastNav.style.display = "none";
 			}
+
+			// Responsive Slider Logic
 			var page = 0;
 			const nextArrow = document.querySelector(".next-arrow");
 			const previousArrow = document.querySelector(".previous-arrow");
 			const divContent = document.querySelector(".div-content");
-			const divWidth = document.querySelector(`.div0`).clientWidth;
-			document.querySelector(".div-container").style.width =
-				divWidth + "px";
-			nextArrow.addEventListener("click", function () {
-				if (page == 4) {
-					return;
+			const divContainer = document.querySelector(".div-container");
+			
+			// Dynamic width calculation function
+			function getSlideWidth() {
+				return divContainer.clientWidth;
+			}
+
+			// Apply transform based on responsive width
+			function moveToPage() {
+				const currentWidth = getSlideWidth();
+				divContent.style.transform = `translateX(-${page * currentWidth}px)`;
+				
+				// Handle pagination dots
+				for (var i = 0; i < 5; i++) {
+					const pageDot = document.querySelector(`.page${i}`);
+					if(pageDot) {
+						if (i === page) {
+							pageDot.classList.remove("hidden");
+							pageDot.classList.add("visible");
+						} else {
+							pageDot.classList.add("hidden");
+							pageDot.classList.remove("visible");
+						}
+					}
 				}
+			}
+
+			// Event Listeners for Arrows
+			nextArrow.addEventListener("click", function () {
+				if (page === 4) return;
 				page++;
-
-				divContent.style.transform = `translateX(-${
-					page * divWidth
-				}px)`;
-				document
-					.querySelector(`.page${page - 1}`)
-					.classList.add("hidden");
-				document
-					.querySelector(`.page${page - 1}`)
-					.classList.remove("visible");
-
-				document
-					.querySelector(`.page${page}`)
-					.classList.remove("hidden");
-				document.querySelector(`.page${page}`).classList.add("visible");
+				moveToPage();
 			});
 
 			previousArrow.addEventListener("click", function () {
-				if (page == 0) {
-					return;
-				}
+				if (page === 0) return;
 				page--;
-				divContent.style.transform = `translateX(-${
-					page * divWidth
-				}px)`;
-				document
-					.querySelector(`.page${page + 1}`)
-					.classList.add("hidden");
-				document
-					.querySelector(`.page${page + 1}`)
-					.classList.remove("visible");
-
-				document
-					.querySelector(`.page${page}`)
-					.classList.remove("hidden");
-				document.querySelector(`.page${page}`).classList.add("visible");
+				moveToPage();
 			});
 
-			if (iValue == -1) {
-				document.querySelector(".page0").classList.add("visible");
-				document.querySelector(".page0").classList.remove("hidden");
-			} else {
-				page = iValue;
-				document
-					.querySelector(`.page${iValue}`)
-					.classList.add("visible");
-				document
-					.querySelector(`.page${iValue}`)
-					.classList.remove("hidden");
-				divContent.style.transform = `translateX(-${
-					iValue * divWidth
-				}px)`;
-			}
+			// Handle Window Resize to keep the active slide in view
+			window.addEventListener("resize", () => {
+				moveToPage(); // Recalculates width instantly and locks the slide in place
+			});
 
-			function moveToPage() {
-				divContent.style.transform = `translateX(-${
-					page * divWidth
-				}px)`;
-				document
-					.querySelector(`.page${page}`)
-					.classList.remove("hidden");
-				document.querySelector(`.page${page}`).classList.add("visible");
-				for (var i = 0; i < 5; i++) {
-					if (i == page) {
-						continue;
-					}
-					document.querySelector(`.page${i}`).classList.add("hidden");
-					document
-						.querySelector(`.page${i}`)
-						.classList.remove("visible");
+			// Initialize Slider
+			if (iValue == -1) {
+				page = 0;
+			} else {
+				page = parseInt(iValue) || 0;
+			}
+			moveToPage();
+
+			// Pagination Click Listeners
+			for(let j = 0; j < 5; j++) {
+				const dot = document.querySelector(`.page${j}`);
+				if(dot) {
+					dot.addEventListener("click", function () {
+						page = j;
+						moveToPage();
+					});
 				}
 			}
 
-			document
-				.querySelector(".page0")
-				.addEventListener("click", function () {
-					page = 0;
-					moveToPage();
-				});
-
-			document
-				.querySelector(".page1")
-				.addEventListener("click", function () {
-					page = 1;
-					moveToPage();
-				});
-
-			document
-				.querySelector(".page2")
-				.addEventListener("click", function () {
-					page = 2;
-					moveToPage();
-				});
-
-			document
-				.querySelector(".page3")
-				.addEventListener("click", function () {
-					page = 3;
-					moveToPage();
-				});
-
-			document
-				.querySelector(".page4")
-				.addEventListener("click", function () {
-					page = 4;
-					moveToPage();
-				});
-
+			// Calendar Max Date Validation
 			document.addEventListener("DOMContentLoaded", (event) => {
 				const dateInput = document.querySelector(".calendar");
-				const today = new Date();
-				const yesterday = new Date(today);
-				yesterday.setDate(today.getDate() - 1);
+				if(dateInput) {
+					const today = new Date();
+					const yesterday = new Date(today);
+					yesterday.setDate(today.getDate() - 1);
 
-				const yyyy = yesterday.getFullYear();
-				const mm = String(yesterday.getMonth() + 1).padStart(2, "0");
-				const dd = String(yesterday.getDate()).padStart(2, "0");
+					const yyyy = yesterday.getFullYear();
+					const mm = String(yesterday.getMonth() + 1).padStart(2, "0");
+					const dd = String(yesterday.getDate()).padStart(2, "0");
 
-				const maxDate = `${yyyy}-${mm}-${dd}`;
-				dateInput.setAttribute("max", maxDate);
+					const maxDate = `${yyyy}-${mm}-${dd}`;
+					dateInput.setAttribute("max", maxDate);
+				}
 			});
 		</script>
 	</body>
