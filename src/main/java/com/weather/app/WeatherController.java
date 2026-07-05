@@ -1,19 +1,16 @@
 package com.weather.app;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.TimeZone;
 import java.util.List;
 
 @Controller
 public class WeatherController {
     private WeatherService weatherService;
-    private TimeZone timeZone;
-    @Autowired
+
     public WeatherController(WeatherService weatherService){
         this.weatherService = weatherService;
     }

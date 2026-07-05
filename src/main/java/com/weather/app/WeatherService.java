@@ -1,6 +1,6 @@
 package com.weather.app;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -16,12 +16,24 @@ import java.util.Random;
 
 @Service
 public class WeatherService {
-    @Autowired
-    private static RestTemplate restTemplate;
-    @Autowired
-    public WeatherService(RestTemplate restTemplate) {
+    private RestTemplate restTemplate;
+    private Environment environment;
+
+    private String apiKey1;
+    private String apiKey2;
+    private String locationAPIKey;
+
+
+    public WeatherService(RestTemplate restTemplate, Environment environment) {
         this.restTemplate = restTemplate;
+        this.environment = environment;
+
+        apiKey1 = environment.getProperty("visualcrossing.api-key-1");
+        apiKey2 = environment.getProperty("visualcrossing.api-key-2");
+
+        locationAPIKey = environment.getProperty("location.api-key1");
     }
+    
     String[] cities = {
             "New York", "Los Angeles", "Chicago", "Houston", "Phoenix",
             "Philadelphia", "San Antonio", "San Diego", "Dallas", "San Jose",
@@ -52,7 +64,7 @@ public class WeatherService {
     };
 
     public WeatherResponse getWeather(String location) {
-        String apiUrl = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + location + "?unitGroup=metric&key=ABHFPFLAEVMD2JEBPYU7XEJNN";
+        String apiUrl = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + location + "?unitGroup=metric&key="+apiKey1;
         WeatherResponse weatherResponse = null;
         boolean flag1 = false;
         try {
@@ -120,7 +132,7 @@ public class WeatherService {
 
 
     public List<HourlyWeather> getHourlyWeather(String location){
-        String apiUrl = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + location + "?unitGroup=metric&key=LYPXSDSWDXWLZTNMCA5BFZ8GN";
+        String apiUrl = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + location + "?unitGroup=metric&key="+apiKey1;
         WeatherResponse weatherResponse = null;
         List<HourlyWeather> list = new ArrayList<>();
         boolean flag1 = false;
@@ -199,7 +211,7 @@ public class WeatherService {
     public WeatherResponse getHistoricalWeather(String location, String inputDate){
         String startDate = "";
         String endDate = "";
-        String timeZoneApiUrl = "https://api.ipgeolocation.io/timezone?apiKey=f7e7de221f284d288f678c9ecf0e32ba&location="+location;
+        String timeZoneApiUrl = "https://api.ipgeolocation.io/timezone?apiKey="+locationAPIKey+"&location="+location;
         TimeZone timeZone = null;
         boolean dateCheck = false;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -248,7 +260,7 @@ public class WeatherService {
                 startDate = inputDate;
             }
         }
-        String apiUrl = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/"+location+"/"+startDate+"/"+endDate+"?unitGroup=metric&key=HQJ9NLES4ZFTUKR686T5AUJZW";
+        String apiUrl = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/"+location+"/"+startDate+"/"+endDate+"?unitGroup=metric&key="+apiKey2;
         WeatherResponse weatherResponse = null;
         boolean flag1 = false;
         try {
@@ -359,7 +371,7 @@ public class WeatherService {
     public String getYesterday(String location) {
         String yesterdayDate = "";
         try {
-            String timeZoneApiUrl = "https://api.ipgeolocation.io/timezone?apiKey=f7e7de221f284d288f678c9ecf0e32ba&location=" + location;
+            String timeZoneApiUrl = "https://api.ipgeolocation.io/timezone?apiKey="+locationAPIKey+"&location=" + location; 
             TimeZone timeZone = restTemplate.getForObject(timeZoneApiUrl, TimeZone.class);
             ZoneId zoneId = ZoneId.of(timeZone.getTimezone());
             ZonedDateTime yesterday = ZonedDateTime.now(zoneId).minusDays(1);

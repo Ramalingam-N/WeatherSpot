@@ -10,5 +10,4 @@ import lombok.Setter;
 public class TimeZone {
     private String message;
     private String timezone;
-
 }
