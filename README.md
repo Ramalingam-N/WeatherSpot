@@ -6,6 +6,19 @@ WeatherSpot is a comprehensive, premium-designed weather application built with 
 
 ---
 
+## 📸 Screenshots
+
+<p align="center">
+  <img src="screenshots/current.png" width="48%" alt="Current Weather Dashboard">
+  &nbsp;
+  <img src="screenshots/hourly.png" width="48%" alt="Hourly Forecast">
+</p>
+<p align="center">
+  <img src="screenshots/historical.png" width="97%" alt="Historical Weather Slider">
+</p>
+
+---
+
 ## ✨ Features
 
 * **Current Weather:** View real-time weather conditions instantly.
